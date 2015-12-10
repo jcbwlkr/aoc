@@ -1,5 +1,11 @@
 package main
 
+import (
+	"errors"
+	"strconv"
+	"strings"
+)
+
 // Box represents a box that needs wrapped
 type Box struct {
 	Length int
@@ -14,6 +20,32 @@ func NewBox(l, w, h int) Box {
 		Width:  w,
 		Height: h,
 	}
+}
+
+// These errors may be returned when calling NewBoxFromDimensions with invalid
+// input
+var (
+	ErrDimensionsMalformed = errors.New("dimension string is not of the form NxNxN")
+	ErrDimensionsNonInt    = errors.New("dimensions are not all ints")
+)
+
+// NewBoxFromDimensions creates a box from a string of the form "1x2x3" meaning
+// length 1, width 2, and height 3.
+func NewBoxFromDimensions(dimensions string) (Box, error) {
+	parts := strings.Split(dimensions, "x")
+	if len(parts) != 3 {
+		return Box{}, ErrDimensionsMalformed
+	}
+	dims := make([]int, 3)
+	for i, v := range parts {
+		d, err := strconv.Atoi(v)
+		if err != nil {
+			return Box{}, ErrDimensionsNonInt
+		}
+		dims[i] = d
+	}
+
+	return NewBox(dims[0], dims[1], dims[2]), nil
 }
 
 // RequiredPaper implements the algorith for calculating the required square

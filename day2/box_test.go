@@ -18,6 +18,40 @@ func TestNewBox(t *testing.T) {
 	}
 }
 
+func TestNewBoxFromDimensions(t *testing.T) {
+	tests := []struct {
+		input string
+		box   Box
+		err   bool
+	}{
+		{"1x2x3", NewBox(1, 2, 3), false},
+		{"1x22x3", NewBox(1, 22, 3), false},
+		{"1x2x33", NewBox(1, 2, 33), false},
+		{"11x22x33", NewBox(11, 22, 33), false},
+		{"", Box{}, true},
+		{"banana", Box{}, true},
+		{"2", Box{}, true},
+		{"2x4", Box{}, true},
+		{"2x4x5x6", Box{}, true},
+		{"AxBxC", Box{}, true},
+		{"Ax2x3", Box{}, true},
+		{"1xBx3", Box{}, true},
+		{"1x2xC", Box{}, true},
+	}
+
+	for i, test := range tests {
+		box, err := NewBoxFromDimensions(test.input)
+		switch {
+		case err != nil && !test.err:
+			t.Errorf("Test %d, NewBoxFromDimensions(%v): should not have errored, err was %v", i, test.input, err)
+		case err == nil && test.err:
+			t.Errorf("Test %d, NewBoxFromDimensions(%v): should have errored, err was nil", i, test.input)
+		case box != test.box:
+			t.Errorf("Test %d, NewBoxFromDimensions(%v): expected %v, actual %v", i, test.input, test.box, box)
+		}
+	}
+}
+
 func TestBoxRequiredPaper(t *testing.T) {
 	tests := []struct {
 		box      Box
