@@ -48,9 +48,10 @@ func NewBoxFromDimensions(dimensions string) (Box, error) {
 	return NewBox(dims[0], dims[1], dims[2]), nil
 }
 
-// RequiredPaper implements the algorith for calculating the required square
-// footage of wrapping paper to wrap a Box.
+// RequiredPaper calculates the required square footage of wrapping paper to
+// wrap a Box.
 func (b Box) RequiredPaper() int {
+	// areas of the faces
 	var (
 		top  = b.Length * b.Width
 		side = b.Length * b.Height
@@ -58,6 +59,20 @@ func (b Box) RequiredPaper() int {
 	)
 
 	return 2*top + 2*side + 2*end + smallest(top, side, end)
+}
+
+// RequiredRibbon calculates the required length of ribbon to dress a Box
+func (b Box) RequiredRibbon() int {
+	// perimeters of the faces
+	var (
+		top  = 2*b.Length + 2*b.Width
+		side = 2*b.Length + 2*b.Height
+		end  = 2*b.Width + 2*b.Height
+	)
+
+	volume := b.Length * b.Width * b.Height
+
+	return smallest(top, side, end) + volume
 }
 
 func smallest(nums ...int) int {

@@ -72,6 +72,23 @@ func TestBoxRequiredPaper(t *testing.T) {
 	}
 }
 
+func TestBoxRequiredRibbon(t *testing.T) {
+	tests := []struct {
+		box      Box
+		expected int
+	}{
+		{NewBox(2, 3, 4), 34},
+		{NewBox(1, 1, 10), 14},
+	}
+
+	for i, test := range tests {
+		actual := test.box.RequiredRibbon()
+		if actual != test.expected {
+			t.Errorf("Test %d, %#v.RequiredRibbon(): expected %v, actual %v", i, test.box, test.expected, actual)
+		}
+	}
+}
+
 func TestSmallest(t *testing.T) {
 	tests := []struct {
 		nums     []int
