@@ -1,6 +1,9 @@
 package main
 
-import "strconv"
+import (
+	"bytes"
+	"strconv"
+)
 
 // Printlner can print a ln
 type Printlner interface {
@@ -17,15 +20,22 @@ func lookAndSay(starting string, iterations int, logger Printlner) string {
 	return ret
 }
 
+func check(_ interface{}, err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 func describe(num string) string {
 	var (
 		lastRune rune
 		count    int
-		ret      string
+		ret      bytes.Buffer
 	)
 	for i, r := range []rune(num) {
 		if i != 0 && r != lastRune {
-			ret += strconv.Itoa(count) + string(lastRune)
+			check(ret.WriteString(strconv.Itoa(count)))
+			check(ret.WriteRune(lastRune))
 			count = 1
 			lastRune = r
 			continue
@@ -35,7 +45,8 @@ func describe(num string) string {
 		lastRune = r
 	}
 
-	ret += strconv.Itoa(count) + string(lastRune)
+	check(ret.WriteString(strconv.Itoa(count)))
+	check(ret.WriteRune(lastRune))
 
-	return ret
+	return ret.String()
 }
