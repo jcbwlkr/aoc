@@ -19,7 +19,7 @@ func describe(num string) string {
 		count    int
 		ret      bytes.Buffer
 	)
-	for i, r := range []rune(num) {
+	for i, r := range num {
 		if i != 0 && r != lastRune {
 			ret.WriteString(strconv.Itoa(count))
 			ret.WriteRune(lastRune)
