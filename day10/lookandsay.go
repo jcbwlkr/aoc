@@ -1,10 +1,15 @@
 package main
 
-import "strconv"
+import (
+	"log"
+	"strconv"
+)
 
 func lookAndSay(starting string, iterations int) string {
+	log.Println("starting iteration 1")
 	ret := describe(starting)
 	for i := 1; i < iterations; i++ {
+		log.Println("starting iteration", i+1)
 		ret = describe(ret)
 	}
 	return ret
