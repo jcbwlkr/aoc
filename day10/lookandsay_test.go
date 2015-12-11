@@ -40,3 +40,9 @@ func TestDescribeNum(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkLookAndSay(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		lookAndSay("1113122113", 30)
+	}
+}
