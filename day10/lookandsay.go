@@ -13,12 +13,6 @@ func lookAndSay(starting string, iterations int) string {
 	return ret
 }
 
-func check(_ interface{}, err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
 func describe(num string) string {
 	var (
 		lastRune rune
@@ -27,8 +21,8 @@ func describe(num string) string {
 	)
 	for i, r := range []rune(num) {
 		if i != 0 && r != lastRune {
-			check(ret.WriteString(strconv.Itoa(count)))
-			check(ret.WriteRune(lastRune))
+			ret.WriteString(strconv.Itoa(count))
+			ret.WriteRune(lastRune)
 			count = 1
 			lastRune = r
 			continue
@@ -38,8 +32,8 @@ func describe(num string) string {
 		lastRune = r
 	}
 
-	check(ret.WriteString(strconv.Itoa(count)))
-	check(ret.WriteRune(lastRune))
+	ret.WriteString(strconv.Itoa(count))
+	ret.WriteRune(lastRune)
 
 	return ret.String()
 }
