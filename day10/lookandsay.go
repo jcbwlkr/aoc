@@ -12,28 +12,23 @@ func lookAndSay(starting string, iterations int) string {
 
 func describe(num string) string {
 	var (
-		runs     [][]rune
-		run      []rune
 		lastRune rune
+		count    int
 		ret      string
 	)
 	for i, r := range []rune(num) {
 		if i != 0 && r != lastRune {
-			runs = append(runs, run)
-			run = []rune{r}
+			ret += strconv.Itoa(count) + string(lastRune)
+			count = 1
 			lastRune = r
 			continue
 		}
 
+		count++
 		lastRune = r
-		run = append(run, r)
 	}
 
-	runs = append(runs, run)
-
-	for _, run := range runs {
-		ret += strconv.Itoa(len(run)) + string(run[0])
-	}
+	ret += strconv.Itoa(count) + string(lastRune)
 
 	return ret
 }
