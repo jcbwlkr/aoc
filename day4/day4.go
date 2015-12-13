@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	var input = "ckczppom"
+	var input = "yzbqklnj"
 
 	run(mineOriginal, "original serial implementation", input)
 	run(mineSerial, "improved serial implementation", input)
