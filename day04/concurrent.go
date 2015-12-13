@@ -4,97 +4,10 @@ import (
 	"bytes"
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	"math"
 	"strconv"
-	"strings"
 	"sync"
-	"time"
 )
-
-func main() {
-	var input = "yzbqklnj"
-
-	run(mineOriginal, "original serial implementation", input)
-	run(mineSerial, "improved serial implementation", input)
-	run(mineConcurrent, "concurrent implementation", input)
-}
-
-type miner func(string, string) int
-
-func run(fn miner, label, input string) {
-	var (
-		t0    = time.Now()
-		coin  int
-		start time.Time
-	)
-
-	fmt.Println("Starting", label)
-
-	fmt.Print("5-zero coin: ")
-	start = time.Now()
-	coin = fn(input, "00000")
-	fmt.Printf("%d (%v)\n", coin, time.Since(start))
-
-	fmt.Print("6-zero coin: ")
-	start = time.Now()
-	coin = fn(input, "000000")
-	fmt.Printf("%d (%v)\n", coin, time.Since(start))
-
-	//fmt.Print("Failure case: ")
-	//start = time.Now()
-	//coin = fn(input, "xxxx")
-	//fmt.Printf("%d (%v)\n", coin, time.Since(start))
-
-	fmt.Printf("Total time: %v\n\n", time.Since(t0))
-}
-
-func mineOriginal(input string, prefix string) int {
-	for i := 1; i < math.MaxInt32; i++ {
-		shaft := input + fmt.Sprintf("%d", i)
-		ore := fmt.Sprintf("%x", md5.Sum([]byte(shaft)))
-
-		if strings.HasPrefix(ore, prefix) {
-			return i
-		}
-	}
-
-	return -1
-}
-
-func mineSerial(input string, prefix string) int {
-	var (
-		// l is the min length of the md5 byte slice that is needed to generate a
-		// hex string at least as long as the desired prefix
-		l = int(math.Ceil(float64(len(prefix)) / float64(2)))
-
-		// in is the input cast as a []byte. Do this before the loop so we don't
-		// have to keep doing it.
-		in = []byte(input)
-
-		p = []byte(prefix)
-
-		ore = make([]byte, hex.EncodedLen(l))
-	)
-
-	for i := 1; i < math.MaxInt32; i++ {
-		// Combine the bytes of in plus the bytes of the string version of i then
-		// get the md5 sum as another []byte
-		sum := md5.Sum(append(
-			in,
-			[]byte(strconv.Itoa(i))...,
-		))
-
-		// Get the hex encoding of just the first part of the md5 sum slice
-		hex.Encode(ore, sum[:l])
-
-		if bytes.Equal(p, ore[:len(p)]) {
-			return i
-		}
-	}
-
-	return -1
-}
 
 func mineConcurrent(input string, prefix string) int {
 	var (
