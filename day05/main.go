@@ -14,12 +14,19 @@ func main() {
 	}
 
 	scanner := bufio.NewScanner(file)
-	nice := 0
+	var niceOld, niceNew int
 	for scanner.Scan() {
-		if isNice(scanner.Text()) {
-			nice++
+		if isNiceOld(scanner.Text()) {
+			niceOld++
+		}
+		if isNiceNew(scanner.Text()) {
+			niceNew++
 		}
 	}
 
-	fmt.Println(nice)
+	if err := scanner.Err(); err != nil {
+		log.Println(err)
+	}
+
+	fmt.Println(niceOld, niceNew)
 }

@@ -2,9 +2,10 @@ package main
 
 import (
 	"regexp"
+	"strings"
 )
 
-func isNice(word string) bool {
+func isNiceOld(word string) bool {
 	var (
 		forbidden = regexp.MustCompile(`(ab|cd|pq|xy)`)
 		vowels    int
@@ -31,4 +32,30 @@ func isNice(word string) bool {
 	}
 
 	return false
+}
+
+func isNiceNew(word string) bool {
+	var (
+		runes     = []rune(word)
+		hasRepeat bool
+		hasPair   bool
+	)
+
+	for i := 0; i < len(runes)-2; i++ {
+		if runes[i] == runes[i+2] {
+			hasPair = true
+			break
+		}
+	}
+
+	for i := 0; i < len(runes)-1; i++ {
+		pair := string(runes[i]) + string(runes[i+1])
+		rest := string(runes[i+2:])
+		if strings.Count(rest, pair) > 0 {
+			hasRepeat = true
+			break
+		}
+	}
+
+	return hasPair && hasRepeat
 }
