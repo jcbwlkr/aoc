@@ -15,22 +15,32 @@ type Board map[Point]*Light
 // NewBoard preps a 1000x1000 board of lights
 func NewBoard() Board {
 	b := Board{}
-	for x := 0; x < 1000; x++ {
-		for y := 0; y < 1000; y++ {
-			b[Point{X: x, Y: y}] = &Light{}
+	for y := 0; y < 1000; y++ {
+		for x := 0; x < 1000; x++ {
+			b[Point{X: x, Y: y}] = NewLight()
 		}
 	}
 
 	return b
 }
 
-// Image expresses the Board's current state as an image.
-func (b Board) Image() *image.Paletted {
+// ImageBW expresses the Board's current state as black and white image.
+func (b Board) ImageBW() *image.Paletted {
 	img := image.NewPaletted(r, palette.Plan9)
 	for p, l := range b {
 		if l.On {
 			img.Set(p.X, p.Y, color.White)
 		}
+	}
+
+	return img
+}
+
+// ImageColor expresses the Board's current state as colored image.
+func (b Board) ImageColor() *image.Paletted {
+	img := image.NewPaletted(r, palette.Plan9)
+	for p, l := range b {
+		img.Set(p.X, p.Y, l.Color())
 	}
 
 	return img

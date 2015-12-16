@@ -1,28 +1,40 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/cheggaaa/pb"
+)
 
 func main() {
 	var (
 		b         = NewBoard()
 		commands  = ParseCommands("input.txt")
-		doMakeGif = false
+		doMakeGif = true
 		g1        = NewGIF("lights_1.gif")
-		//g2        = NewGIF("lights_2.gif")
+		g2        = NewGIF("lights_2.gif")
 	)
 
+	commands = commands[0:30]
+	fmt.Println("Processing commands")
+	bar := pb.StartNew(len(commands))
 	for _, cmd := range commands {
 		for _, p := range cmd.Range() {
 			b[p].TakeAction(cmd.Action)
 		}
 
 		if doMakeGif {
-			g1.AddImage(b.Image())
+			g1.AddImage(b.ImageBW())
+			g2.AddImage(b.ImageColor())
 		}
+		bar.Increment()
 	}
+
+	bar.FinishPrint("Wrapping up")
 
 	if doMakeGif {
 		g1.Encode()
+		g2.Encode()
 	}
 
 	fmt.Println("Lights on at the end", b.LitCount()) // 569999 for me
