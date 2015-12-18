@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
+	"strconv"
 )
 
 func main() {
@@ -18,7 +18,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	start := time.Now()
-	val := c.Read("a")
-	fmt.Printf("a is %d (%s)\n", val, time.Since(start))
+	a := c.Read("a")
+	fmt.Printf("Part 1: a is %d\n", a)
+
+	c.Replace("b", strconv.Itoa(int(a)))
+
+	a = c.Read("a")
+	fmt.Printf("Part 2: a is %d\n", a)
 }

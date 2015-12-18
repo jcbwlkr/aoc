@@ -45,6 +45,12 @@ func NewCircuit(r io.Reader) (*Circuit, error) {
 	return c, nil
 }
 
+// Replace will change the instruction for a specific wire
+func (c *Circuit) Replace(wire, instruction string) {
+	c.wires[wire] = instruction
+	c.signals = make(map[string]uint16)
+}
+
 // RegExps used by Read
 var (
 	reFollow = regexp.MustCompile(`^[a-z]+$`)

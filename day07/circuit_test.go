@@ -76,3 +76,23 @@ func TestSimpleCircuit(t *testing.T) {
 		}
 	}
 }
+
+func TestReplace(t *testing.T) {
+	var expected, actual uint16
+
+	r := strings.NewReader(`123 -> a`)
+	c, err := NewCircuit(r)
+	if err != nil {
+		t.Fatalf("NewCircuit() err be nil, was %v", err)
+	}
+
+	if expected, actual = 123, c.Read("a"); expected != actual {
+		t.Fatalf("Before replacement: c.Read(%q) expected %d, actual %d", "a", expected, actual)
+	}
+
+	c.Replace("a", "456")
+
+	if expected, actual = 456, c.Read("a"); expected != actual {
+		t.Fatalf("After replacement: c.Read(%q) expected %d, actual %d", "a", expected, actual)
+	}
+}
