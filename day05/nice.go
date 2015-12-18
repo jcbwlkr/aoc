@@ -13,7 +13,7 @@ func isNiceOld(word string) bool {
 		hasDouble bool
 	)
 
-	if len(forbidden.FindAllIndex([]byte(word), -1)) > 0 {
+	if forbidden.MatchString(word) {
 		return false
 	}
 
