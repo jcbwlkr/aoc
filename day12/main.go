@@ -25,27 +25,22 @@ func main() {
 	fmt.Println(parse(data, false))
 }
 
-func parse(data interface{}, redOK bool) float64 {
+func parse(data interface{}, redOK bool) (sum float64) {
 	switch t := data.(type) {
 	case float64:
-		return t
-	case string:
-		return 0
+		sum = t
 	case []interface{}:
-		var sum float64
 		for _, d := range t {
 			sum += parse(d, redOK)
 		}
-		return sum
 	case map[string]interface{}:
-		var sum float64
 		for _, d := range t {
 			if d == "red" && !redOK {
-				return 0
+				sum = 0
+				break
 			}
 			sum += parse(d, redOK)
 		}
-		return sum
 	}
-	return 0
+	return sum
 }
