@@ -12,11 +12,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	houses, err := houseVisits(file)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
+	houses := houseVisits(file)
 	fmt.Println(len(houses))
 
 	file, err = os.Open("input.txt")
@@ -24,10 +20,6 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	houses, err = roboVisits(file)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
+	houses = roboVisits(file)
 	fmt.Println(len(houses))
 }

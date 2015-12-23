@@ -18,12 +18,9 @@ func TestHouseVisits(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		houses, err := houseVisits(strings.NewReader(test.input))
+		houses := houseVisits(strings.NewReader(test.input))
 		actual := len(houses)
-		switch {
-		case err != nil:
-			t.Errorf("Test %d: Error should be nil, got %v", i, err)
-		case actual != test.numHouses:
+		if actual != test.numHouses {
 			t.Errorf("Test %d: len(housesFromInput) expected %d, actual %d", i, test.numHouses, actual)
 		}
 	}
@@ -42,12 +39,9 @@ func TestRoboVisits(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		houses, err := roboVisits(strings.NewReader(test.input))
+		houses := roboVisits(strings.NewReader(test.input))
 		actual := len(houses)
-		switch {
-		case err != nil:
-			t.Errorf("Test %d: Error should be nil, got %v", i, err)
-		case actual != test.numHouses:
+		if actual != test.numHouses {
 			t.Errorf("Test %d: len(roboVisits) expected %d, actual %d", i, test.numHouses, actual)
 		}
 	}

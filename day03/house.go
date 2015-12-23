@@ -1,43 +1,38 @@
 package main
 
+import "bufio"
 import "io"
-import "io/ioutil"
 
 // A House is a home
 type House struct {
 	X, Y int // The coordinates of the house in our grid
 }
 
-func houseVisits(r io.Reader) (map[House]int, error) {
-	cmds, err := ioutil.ReadAll(r)
-	if err != nil {
-		return nil, err
-	}
-
-	return work(cmds, 1), nil
+func houseVisits(r io.Reader) map[House]int {
+	return work(r, 1)
 }
 
-func roboVisits(r io.Reader) (map[House]int, error) {
-	cmds, err := ioutil.ReadAll(r)
-	if err != nil {
-		return nil, err
-	}
-
-	return work(cmds, 2), nil
+func roboVisits(r io.Reader) map[House]int {
+	return work(r, 2)
 }
 
-func work(cmds []byte, numWorkers int) map[House]int {
-	workers := make([]Worker, numWorkers)
-	m := map[House]int{
-		{X: 0, Y: 0}: len(workers), // Starting location always gets visits
-	}
-	i := 0
+func work(r io.Reader, numWorkers int) map[House]int {
+	var (
+		rdr     = bufio.NewReader(r)
+		workers = make([]Worker, numWorkers)
+		m       = map[House]int{{X: 0, Y: 0}: len(workers)} // Starting location always gets visits
+		i       = 0
+	)
 
-	for _, c := range cmds {
+	for {
+		c, _, err := rdr.ReadRune()
+		if err != nil {
+			break
+		}
 		if i >= numWorkers {
 			i = 0
 		}
-		m[workers[i].Move(rune(c))]++
+		m[workers[i].Move(c)]++
 		i++
 	}
 	return m
