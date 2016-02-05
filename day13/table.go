@@ -139,13 +139,7 @@ func allCombinations(t Table) []Table {
 	var combos []Table
 
 	for i, a := range t {
-		var others Table
-		for j, b := range t {
-			if i != j {
-				others = append(others, b)
-			}
-		}
-
+		others := append(append(Table{}, t[:i]...), t[i+1:]...)
 		for _, combo := range allCombinations(others) {
 			combos = append(combos, append(combo, a))
 		}
