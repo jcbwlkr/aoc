@@ -71,9 +71,7 @@ func NewTable(r io.Reader) Table {
 // seating order.
 func (t Table) TotalHappiness() int {
 	var h int
-	l := len(t)
-	for i := 0; i < l; i++ {
-		g := t[i]
+	for _, g := range t {
 		h += g.Opinions[t.Left(g).Name]
 		h += g.Opinions[t.Right(g).Name]
 	}
