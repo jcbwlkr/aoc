@@ -29,6 +29,15 @@ Part 2 was trivial to implement because I was able to leverage the zero value
 behavior of maps. I just appended myself to the table and recalled `Optimize`.
 
 ```
-	tbl = append(tbl, Guest{Name: "Host"})
-	tbl.Optimize()
+tbl = append(tbl, Guest{Name: "Host"})
+tbl.Optimize()
+```
+
+I also included the following methods for my own refactoring and convenience
+
+```
+func (g Guest) String() string
+func (g Guest) Eq(other Guest) bool
+func (t Table) Left(g Guest) Guest
+func (t Table) Right(g Guest) Guest
 ```
