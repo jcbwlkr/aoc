@@ -11,8 +11,8 @@ void main()
     int found2;
     int index = 1;
 
-    while(code1.length < 8 || found2 < 8) {
-        auto md5 = new MD5Digest();
+    auto md5 = new MD5Digest();
+    while(found2 < 8 || code1.length < 8) {
         ubyte[] hash = md5.digest(id ~ to!string(index));
         string hashS = toHexString(hash[0..4]);
 
