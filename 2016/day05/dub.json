@@ -1,0 +1,9 @@
+{
+	"name": "day05",
+	"authors": [
+		"Jacob Walker"
+	],
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2016, Jacob Walker",
+	"license": "MIT"
+}
