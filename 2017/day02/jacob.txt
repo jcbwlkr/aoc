@@ -1,0 +1,18 @@
+Sum: 0 Min: 71 Max: 372 Difference: 301
+Sum: 301 Min: 90 Max: 844 Difference: 754
+Sum: 1055 Min: 50 Max: 1630 Difference: 1580
+Sum: 2635 Min: 119 Max: 1705 Difference: 1586
+Sum: 4221 Min: 104 Max: 3711 Difference: 3607
+Sum: 7828 Min: 149 Max: 1306 Difference: 1157
+Sum: 8985 Min: 107 Max: 2643 Difference: 2536
+Sum: 11521 Min: 83 Max: 1845 Difference: 1762
+Sum: 13283 Min: 52 Max: 638 Difference: 586
+Sum: 13869 Min: 134 Max: 4205 Difference: 4071
+Sum: 17940 Min: 138 Max: 2985 Difference: 2847
+Sum: 20787 Min: 156 Max: 4554 Difference: 4398
+Sum: 25185 Min: 131 Max: 6201 Difference: 6070
+Sum: 31255 Min: 55 Max: 2545 Difference: 2490
+Sum: 33745 Min: 56 Max: 1161 Difference: 1105
+Sum: 34850 Min: 174 Max: 2074 Difference: 1900
+
+Checksum: 36750

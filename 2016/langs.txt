@@ -1,0 +1,24 @@
+Elixir
+Bash
+Perl
+Vim
+D
+R
+Rust
+Nim
+Haskell
+C
+C++
+Java
+Scala
+Clojure
+Lisp
+ES6+ JS
+PHP7
+Python3
+SQL?
+Groovy
+Swift
+.Net
+Cobol
+TCL
