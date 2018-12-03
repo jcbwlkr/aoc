@@ -18,17 +18,17 @@ defmodule Freq do
 
   # Walks the list of inputs. Returns either
   # {final_frequency} -> if it finds a repeated frequency
-  # {current_frequency, map_of_seen_frequencies} -> if it didn't find a repeat
+  # {current_frequency, seen_frequencies} -> if it didn't find a repeat
   def p2Walk([head | tail], freq, seen) do
     freq = freq + parse(head)
 
-    case seen[freq] do
+    case MapSet.member?(seen, freq) do
       true -> freq
-      nil -> p2Walk(tail, freq, Map.put(seen, freq, true))
+      false -> p2Walk(tail, freq, MapSet.put(seen, freq))
     end
   end
 
-  # Recursive base case, returns {current number, map} when the list is empty []
+  # Recursive base case, returns {current number, seen_frequencies} when the list is empty []
   def p2Walk([], freq, seen), do: {freq, seen}
 
   # parse returns the int value of s. Invalid values are just treated as 0.
@@ -51,7 +51,11 @@ num = Freq.part1(lines, 0)
 IO.puts("Part #1")
 IO.puts("Final value: #{num}")
 
-num = Freq.part2(lines, 0, %{0 => true})
+# Create MapSet of seen frequencies. Put "0" in the set to begin with.
+seen = MapSet.new()
+seen = MapSet.put(seen, 0)
+
+num = Freq.part2(lines, 0, seen)
 
 IO.puts("Part #2")
 IO.puts("Final value: #{num}")
